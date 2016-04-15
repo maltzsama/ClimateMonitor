@@ -1,13 +1,9 @@
-#include <Arduino.h>
-#include <DHT.h>
-
-#define DHTTYPE DHT22   // define kind of sensor
-int dht_pin = A0;       // define pin where sensor is connected
-
-DHT dht(dht_pin, DHTTYPE);  // initialize pin
+#include "main.h"
 
 int main(){
   init();
+
+  DHT dht(dht_pin, dht_type);  // initialize pin
 
   Serial.begin(9600);
 
@@ -18,19 +14,27 @@ int main(){
   Serial.println("#######################");
 
   for(;;){
-    float h = dht.readHumidity();
-    float t = dht.readTemperature();
+
+    tempInfo data = getSensorData(dht);
+    // cli.getData();
 
     // Mostra os valores lidos, na serial
     Serial.print("Temp. = ");
-    Serial.print(t);
+    Serial.print(data.temperature);
     Serial.print(" C ");
     Serial.print("Um. = ");
-    Serial.print(h);
+    Serial.print(data.humity);
     Serial.println(" % ");
-    
-    delay(2000);
+
+    delay(2000);            //wait 2s to new read
   }
 
   return 0;
+}
+
+tempInfo getSensorData(DHT &dht){
+  tempInfo x;
+  x.humity = dht.readHumidity();
+  x.temperature = dht.readTemperature();
+  return x;
 }
