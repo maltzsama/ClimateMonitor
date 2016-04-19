@@ -2,8 +2,8 @@
 #include <DHT.h>
 #include <Task.h>
 
-const int dhtPin = A0;
-const int dhtType = DHT22;
+const uint8_t dhtPin = A0;
+const uint8_t dhtType = DHT22;
 const uint8_t ledPin = 13;
 const uint8_t timerRead = 10;
 uint8_t idx = 0;
