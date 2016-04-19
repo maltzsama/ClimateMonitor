@@ -3,7 +3,7 @@
 int main(){
   init();
 
-  DHT dht(dht_pin, dht_type);  // initialize pin
+  taskManager.StartTask(&taskReadTemperature); // start with turning it on
 
   Serial.begin(9600);
 
@@ -14,27 +14,32 @@ int main(){
   Serial.println("#######################");
 
   for(;;){
+    taskManager.Loop();
 
-    tempInfo data = getSensorData(dht);
-    // cli.getData();
-
-    // Mostra os valores lidos, na serial
-    Serial.print("Temp. = ");
-    Serial.print(data.temperature);
-    Serial.print(" C ");
-    Serial.print("Um. = ");
-    Serial.print(data.humity);
-    Serial.println(" % ");
-
-    delay(2000);            //wait 2s to new read
   }
 
   return 0;
 }
 
-tempInfo getSensorData(DHT &dht){
+void OnReadTemperature(uint32_t deltaTime)
+{
+    idx++;
+    digitalWrite(ledPin, idx%2);
+
+    tempInfo data = getSensorData();
+    // Show values in serial port and Bluetooth
+    Serial.print("Temp. = ");
+    Serial.print(data.temperature);
+    Serial.print(" C ");
+    Serial.print("Um. = ");
+    Serial.print(data.humidity);
+    Serial.println(" % ");
+
+}
+
+tempInfo getSensorData(){
   tempInfo x;
-  x.humity = dht.readHumidity();
+  x.humidity = dht.readHumidity();
   x.temperature = dht.readTemperature();
   return x;
 }
