@@ -4,8 +4,9 @@ int main(){
   init();
 
   taskManager.StartTask(&taskReadTemperature); // start with turning it on
-
+  // taskManager.StartTask(&barometerController);
   Serial.begin(9600);
+  barometerController.OnStart();
 
   delay(1000);              // wait 1s
   dht.begin();              // start sensor
@@ -34,6 +35,8 @@ void OnReadTemperature(uint32_t deltaTime)
     Serial.print("Um. = ");
     Serial.print(data.humidity);
     Serial.println(" % ");
+
+    barometerController.OnRead();
 
 }
 
