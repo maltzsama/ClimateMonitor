@@ -3,16 +3,15 @@
 int main(){
   init();
 
-  taskManager.StartTask(&taskReadTemperature); // start with turning it on
-  // taskManager.StartTask(&barometerController);
   Serial.begin(9600);
   barometerController.OnStart();
-
+  dhtController.begin();
   delay(1000);              // wait 1s
-  dht.begin();              // start sensor
 
   Serial.println("Start");
   Serial.println("#######################");
+
+  taskManager.StartTask(&taskReadTemperature);
 
   for(;;){
     taskManager.Loop();
@@ -24,25 +23,11 @@ int main(){
 
 void OnReadTemperature(uint32_t deltaTime)
 {
+    Serial.println("on read temperature");
+    Serial.print(idx);
+    Serial.println("############");
     idx++;
-    digitalWrite(ledPin, idx%2);
-
-    tempInfo data = getSensorData();
-    // Show values in serial port and Bluetooth
-    Serial.print("Temp. = ");
-    Serial.print(data.temperature);
-    Serial.print(" C ");
-    Serial.print("Um. = ");
-    Serial.print(data.humidity);
-    Serial.println(" % ");
-
+    dhtController.getHumidity();
+    dhtController.getTemperature();
     barometerController.OnRead();
-
-}
-
-tempInfo getSensorData(){
-  tempInfo x;
-  x.humidity = dht.readHumidity();
-  x.temperature = dht.readTemperature();
-  return x;
 }
