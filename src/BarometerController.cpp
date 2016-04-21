@@ -38,9 +38,15 @@ void BarometerController::OnRead(){
     bmp.getTemperature(&temperature);
     float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
     hight = bmp.pressureToAltitude(seaLevelPressure, event.pressure);
-    Serial.println(temperature);
-    Serial.println(bmp.pressureToAltitude(seaLevelPressure, event.pressure));
-    Serial.println(event.pressure);
+    Serial.print("Temperature: ");
+    Serial.print(temperature);
+    Serial.println(" C");
+    Serial.print("Altitude:    ");
+    Serial.print(bmp.pressureToAltitude(seaLevelPressure, event.pressure));
+    Serial.println(" m");
+    Serial.print("Pressure:    ");
+    Serial.print(event.pressure);
+    Serial.println(" hPa");
 
   }
 }
