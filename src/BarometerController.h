@@ -2,7 +2,6 @@
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BMP085_U.h>
-#include "HardwareSerial.h"
 
 class BarometerController
 {
@@ -14,9 +13,6 @@ public:
     pressure(0),
     hight(0)
     { };
-    // bool OnStart(HardwareSerial &Serial);
-    // bool OnStop(HardwareSerial &Serial);
-    // void OnRead(HardwareSerial &Serial);
     bool OnStart();
     bool OnStop();
     void OnRead();
