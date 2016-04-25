@@ -22,7 +22,7 @@ int main(){
 
 void OnReadTemperature(uint32_t deltaTime)
 {
-    Serial.println("on read temperature");
+    Serial.print("on read temperature ");
     Serial.print(idx);
     Serial.println("############");
     idx++;

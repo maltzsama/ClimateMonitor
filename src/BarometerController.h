@@ -3,8 +3,7 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BMP085_U.h>
 
-class BarometerController
-{
+class BarometerController{
 
 public:
     BarometerController(uint16_t value) :
