@@ -10,12 +10,30 @@ enum NetworkStatus{
 };
 
 class NetworkController {
+
   private:
-    EthernetClient network;
+    EthernetClient *networkCli;
     PubSubClient client;
+    const String clientName;
+    const String user;
+    const String passwd;
+    const IPAddress server;
+    const uint16_t port;
 
   public:
-    String getIPAddress();
-    int mantainConnection();
-    bool connect();
+    NetworkController() :
+    clientName("arduinoClient-01"),
+    user("admin"),
+    passwd("admin"),
+    server(192, 168, 1, 110),
+    port(1883)
+    { };
+
+    static String getIPAddress();
+    int mantainEthernetConnection();
+    static bool connectEthernet();
+    bool connectMqtt();
+    static void callBackMqtt(char* topic, byte* payload, unsigned int length);
+    bool reconnectMqtt();
+
 };
